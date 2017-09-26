@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AgendaContato.Views.ContatoView"
+             Title="Contatos">
+    <ContentPage.Content>
+        <StackLayout>
+            <SearchBar
+                Placeholder="Pesquisar por contato"
+                TextChanged="SearchBar_TextChanged"
+                TextColor="{StaticResource PrimaryTextColor}"
+            />
+            
+            <ListView
+                x:Name="lvlContato"
+                HasUnevenRows="true"
+                ItemTapped="lvlContato_ItemTapped"
+            >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout Padding="15, 10">
+                                    <Label 
+                                        Text="{Binding Nome}" 
+                                        FontAttributes="Bold"
+                                        TextColor="Black"
+                                    />
+                                    <Label 
+                                        Text="{Binding Profissao}" 
+                                        TextColor="Gray"
+                                    />
+                                    <Label 
+                                        Text="{Binding Cidade}" 
+                                        TextColor="Gray"
+                                    />
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

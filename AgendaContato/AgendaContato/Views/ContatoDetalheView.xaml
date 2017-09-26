@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AgendaContato.Views.ContatoDetalheView"
+             Title="Detalhes">
+    <ContentPage.Content>
+        <StackLayout
+            Padding="20"
+        >
+            <Label Text="Informações básicas" />
+
+            <Label Text="Nome" />
+            <Entry Text="{Binding ContatoModel.Nome}"  />
+
+            <Label Text="Profissão" />
+            <Entry Text="{Binding ContatoModel.Profissao}"  />
+
+            <Label Text="Cidade" />
+            <Entry Text="{Binding ContatoModel.Cidade}"  />
+
+            <Button
+                Text="Salvar"
+                Command="{Binding SalvarCommand}"
+            />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

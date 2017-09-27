@@ -14,7 +14,7 @@ namespace AgendaContato.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ContatoDetalheView : ContentPage
 	{
-		public ContatoDetalheView (string id)
+		public ContatoDetalheView (string id = null)
 		{
 			InitializeComponent ();
             BindingContext = new ContatoDetalheViewModel(id);

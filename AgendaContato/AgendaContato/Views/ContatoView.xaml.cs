@@ -45,5 +45,10 @@ namespace AgendaContato.Views
             );
             lvlContato.ItemsSource = contatos;
         }
+
+        void CadastroClicked(object sender, System.EventArgs e)
+        {
+            Navigation.PushAsync(new ContatoDetalheView());
+        }
     }
 }

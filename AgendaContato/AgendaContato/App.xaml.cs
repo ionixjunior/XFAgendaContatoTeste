@@ -18,7 +18,7 @@ namespace AgendaContato
 
             var conn = DependencyService.Get<ISQLite>()
                                         .GetConnection();
-
+           
             conn.CreateTable<ContatoModel>();
 
             MainPage = new NavigationPage(new ContatoView());

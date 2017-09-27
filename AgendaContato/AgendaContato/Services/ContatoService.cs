@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SQLite;
+using Xamarin.Forms;
+using AgendaContato.Interfaces;
 
 namespace AgendaContato.Services
 {
@@ -12,48 +15,43 @@ namespace AgendaContato.Services
         private static ContatoService _instance;
         public static ContatoService Instance => _instance ?? (_instance = new ContatoService());
 
-        private IList<ContatoModel> _contatos;
+        private SQLiteConnection _conn;
 
         private ContatoService()
         {
-            _contatos = new List<ContatoModel>();
-
-            for (int i = 1; i <= 20; i++)
-            {
-                _contatos.Add(new ContatoModel()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Nome = $"João {i}",
-                    Profissao = $"Programador {i}",
-                    Cidade = "Blumenau"
-                });
-            }
+            _conn = DependencyService.Get<ISQLite>()
+                                     .GetConnection();
         }
 
         public IList<ContatoModel> CarregarDados(string filtro = null)
         {
             if (string.IsNullOrEmpty(filtro))
-                return _contatos;
+                return _conn.Table<ContatoModel>().ToList();
 
-            return _contatos.Where(c => c.Nome.ToLower().Contains(filtro.ToLower())).ToList();
+            return _conn.Table<ContatoModel>()
+                        .Where(c => c.Nome.ToLower().Contains(filtro.ToLower()))
+                        .ToList();
         }
 
         public ContatoModel CarregarPorId(string id)
         {
-            return _contatos.Where(c => c.Id == id).FirstOrDefault();
+            return _conn.Find<ContatoModel>(id);
         }
 
         public void Salvar(ContatoModel contatoModel)
         {
             if (string.IsNullOrEmpty(contatoModel.Id))
-            {
-                // cadastro
-                return;
-            }
+                contatoModel.Id = Guid.NewGuid().ToString();
 
-            var contatoGravado = CarregarPorId(contatoModel.Id);
-            var indice = _contatos.IndexOf(contatoGravado);
-            _contatos[indice] = contatoModel;
+            _conn.InsertOrReplace(contatoModel);
+        }
+
+        public void Apagar(ContatoModel contatoModel)
+        {
+            if (string.IsNullOrEmpty(contatoModel.Id))
+                return;
+
+            _conn.Delete<ContatoModel>(contatoModel.Id);
         }
     }
 }

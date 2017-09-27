@@ -21,5 +21,11 @@ namespace AgendaContato.Models
 
         [Column("cidade")]
         public string Cidade { get; set; }
+
+        [Column("latitude")]
+        public double Latitude { get; set; }
+
+        [Column("longitude")]
+        public double Longitude { get; set; }
     }
 }
